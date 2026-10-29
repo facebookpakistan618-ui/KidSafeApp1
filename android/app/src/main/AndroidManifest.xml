@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ══════════════════════════════════════════════════════════════
+         PERMISSIONS — All declared so Android shows them at install time
+         and during in-app permission requests. Nothing is hidden.
+    ══════════════════════════════════════════════════════════════ -->
+
+    <!-- SMS reading (child device only — runtime request + consent screen) -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
+    <!-- Network (Firebase sync) -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Keep service alive in background -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Post notification (foreground service notification, Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:name=".MainApplication"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:allowBackup="false"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="false">
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ══════════════════════════════════════════════════════
+             NOTIFICATION LISTENER SERVICE
+             The user MUST manually enable this in:
+             Settings > Apps > Special app access > Notification access
+             This cannot be granted programmatically — it's always visible
+             to the device owner. We open that Settings screen from the UI.
+        ══════════════════════════════════════════════════════ -->
+        <service
+            android:name=".KidSafeNotificationService"
+            android:label="KidSafe Monitor — Notification Access"
+            android:exported="false"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+            <!-- Restrict to WhatsApp packages only -->
+            <meta-data
+                android:name="android.service.notification.default_filter_type"
+                android:value="package_name_from_settings" />
+        </service>
+
+        <!-- ══════════════════════════════════════════════════════
+             FOREGROUND SERVICE
+             Shows a persistent "Monitoring active" notification
+             on the child's device — visible at all times.
+        ══════════════════════════════════════════════════════ -->
+        <service
+            android:name=".MonitoringForegroundService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false" />
+
+    </application>
+</manifest>

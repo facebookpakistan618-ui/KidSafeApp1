@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "KidSafeApp",
+    "slug": "KidSafeApp",
+    "version": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "630b50fc-8a92-461a-85e5-03fc8f194b52"
+      }
+    }
+  }
+}

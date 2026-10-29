@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "860088553130",
+    "project_id": "kidsafemonitor-14d11",
+    "storage_bucket": "kidsafemonitor-14d11.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860088553130:android:c8bfb382e49fd45fe90ad3",
+        "android_client_info": {
+          "package_name": "com.kidsafemonitor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARwrPyIvUBqbE5zPWoycqzUKJh16b2Hrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
